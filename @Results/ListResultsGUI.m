@@ -51,14 +51,20 @@ ResOpt = uipanel(LR,...
 DispResButton = uicontrol(ResOpt,'Style', 'pushbutton',...
     'String', 'Display Result',...
     'Units','normalized',...
-    'Position', [.1 .1 .35 .8],...
+    'Position', [.05 .1 .3 .8],...
     'Callback', @Disp_callback);
 
 ExpWkButton = uicontrol(ResOpt,'Style', 'pushbutton',...
     'String', 'Export to Workspace',...
     'Units','normalized',...
-    'Position', [.55 .1 .35 .8],...
+    'Position', [.4 .1 .3 .8],...
     'Callback', @Export_callback);
+
+SSCSButton = uicontrol(ResOpt,'Style','pushbutton',...
+    'String','Single Cell Stats',...
+    'Units','normalized',...
+    'Position', [.75 .1 .2 .8],...
+    'Callback',@SingleCell_callback);
 
 %% Result Option Menu
 
@@ -100,7 +106,7 @@ if ~isempty(ResultData.Phi)
         'Total Air Speed',sp,'S','3Dscalar','full',...
         'U/V/W Streamline (display only)',cat(4,u,v,w),[],'3Dvector','basic');
     addresults(['Node-to-node flows, '  Air.abbr '/s)'],vflows,'flows','4Dscalar','full')
-    
+
     if ~isempty(ResultData.PhiResidual)
         addresults(['Phi residual (' Air.abbr '^2/s)'],ResultData.PhiResidual,'phi_resid','3Dscalar','full')
     end
@@ -194,7 +200,7 @@ set(ResList,'String',{R(BasList).String}')
     end
 
     function Save_DLCEA_callback(src,eventdata)
-        % Saves the result object to file then links to DLCEA.      
+        % Saves the result object to file then links to DLCEA.
         % First save
         addpath(pwd);
         cd('Generated Results');
@@ -238,6 +244,12 @@ set(ResList,'String',{R(BasList).String}')
         else
             warndlg('The results file you just saved didn''t find exergy, it''s useless to DLCEA!','No Exergy Field')
         end
+    end
+
+    function SingleCell_callback(src,eventdata)
+        % Opens a GUI which asks you to specify a cell in the room, then
+        % gives some basic statistics about that cell and its neighbors.
+        SingleCellDetails(ResultData)
     end
 
     function Export_callback(src,eventdata)

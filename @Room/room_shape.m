@@ -45,6 +45,7 @@ DispOpts = uimenu(Rm.Figure,'Label','Display Options');
 RefMesh = uimenu(DispOpts,'Label','Refine Mesh','Callback',@RefMesh_callback);
 UpDisp = uimenu(DispOpts,'Label','Refresh Display','Callback',@RefreshDisp_callback);
 ReClas = uimenu(DispOpts,'Label','Reclassify Boundaries','Callback',@ReclassBound_callback);
+ShowSingCell = uimenu(DispOpts,'Label','Show Single Cell Statistics','Callback',@SingleCell_callback);
 
 % Run option menu
 RunOpts = uimenu(Rm.Figure,'Label','Run Options');
@@ -602,6 +603,12 @@ Rm.UpdateDisplay
         end
     end
 
+    function SingleCell_callback(src,eventdata)
+        % Opens a GUI which asks you to specify a cell in the room, then 
+        % gives some basic statistics about that cell and its neighbors.
+        SingleCellDetails(Rm);
+    end
+
 % Run Options
 
     function SolOpt_callback(src,eventdata)
@@ -739,5 +746,4 @@ Rm.UpdateDisplay
     function VorView_callback(src,eventdata)
         ViewVortex(Rm,Rm.VortexInfo)
     end
-
 end

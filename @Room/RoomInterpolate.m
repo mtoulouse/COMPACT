@@ -5,6 +5,10 @@ function VI = RoomInterpolate(Rm,V,ipoint)
 %   virtual node. Then interp3 is called to find the interpolated value at
 %   the point requested.
 %
+%   Rm is the Room object
+%   V is the field you want to interpolate values inside.
+%   ipoint is an array of the coordinates [X Y Z] to interpolate at
+%
 %   Note: ROOMINTERPOLATE also works for sets of coordinates 
 %   [X1 Y1 Z1; X2 Y2 Z2; etc.]
 

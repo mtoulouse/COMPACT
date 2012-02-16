@@ -146,17 +146,18 @@ i=RCi;j=RCj;k=RCk;
 cellinfo = [cellinfo; ['Inroom: ' inroom(i,j,k)]];
 if strcmp(inroom(i,j,k),'Yes')
     cellinfo = [cellinfo; ['Q (W): ' num2str(Q(i,j,k))]];
-end
-
-if InputIsRes && ~isempty(T)
-    T_center = T(TFi,TFj,TFk);
-    cellinfo = [cellinfo; ['Temp (C): ' num2str(T_center)]];
-    cellinfo = [cellinfo; ['E_resid (W): ' num2str(Res.EnergyResidual(i,j,k))]];
-    cellinfo = [cellinfo; ['Entropy (J/kg/K): ' num2str(-0.0055*T_center^2 + 3.648*T_center + 6773)]];
-    if ~isempty(Res.ExergyDest)
-        cellinfo = [cellinfo; ['ExDest (W): ' num2str(Res.ExergyDest(TFi,TFj,TFk))]];
+    if InputIsRes && ~isempty(T)
+        T_center = T(TFi,TFj,TFk);
+        cellinfo = [cellinfo; ['Temp (C): ' num2str(T_center)]];
+        cellinfo = [cellinfo; ['E_resid (W): ' num2str(Res.EnergyResidual(i,j,k))]];
+        cellinfo = [cellinfo; ['Entropy (J/kg/K): ' num2str(-0.0055*T_center^2 + 3.648*T_center + 6773)]];
+        if ~isempty(Res.ExergyDest)
+            cellinfo = [cellinfo; ['ExDest (W): ' num2str(Res.ExergyDest(TFi,TFj,TFk))]];
+        end
     end
 end
+
+
 
 cellinfo = [cellinfo; '------'];
 cellinfo = [cellinfo; 'Surrounding Cell Statistics'];

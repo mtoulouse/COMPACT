@@ -86,7 +86,7 @@ switch Rdsp
             case 'bc_error'
                 Rstr = {Rstr; 'X-direction'; 'Y-direction'; 'Z-direction'};
                 IsoSliceViewGUI(Rstr,Rdat,Rwk,Rdsp,room)
-            case 'flows'
+            case {'flows','vortex_flow'}
                 Rstr = {Rstr; '-X (West)'; '+X (East)'; '-Y (South)'; '+Y (North)';'-Z (Down)'; '+Z (Up)'};
                 IsoSliceViewGUI(Rstr,Rdat,Rwk,Rdsp,room)
         end

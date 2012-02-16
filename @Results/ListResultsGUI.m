@@ -105,7 +105,7 @@ if ~isempty(ResultData.Phi)
         ['W (velocity, ' Air.abbr '/s)'],w,'w','3Dscalar','basic',...
         'Total Air Speed',sp,'S','3Dscalar','full',...
         'U/V/W Streamline (display only)',cat(4,u,v,w),[],'3Dvector','basic');
-    addresults(['Node-to-node flows, '  Air.abbr '/s)'],vflows,'flows','4Dscalar','full')
+    addresults(['Node-to-node flows, ('  Air.abbr '/s)'],vflows,'flows','4Dscalar','full')
 
     if ~isempty(ResultData.PhiResidual)
         addresults(['Phi residual (' Air.abbr '^2/s)'],ResultData.PhiResidual,'phi_resid','3Dscalar','full')
@@ -149,6 +149,7 @@ end
 % VortexSuperposition results
 if ~isempty(ResultData.VortexSuper)
     addresults('<<Vortex Superposition Results>>',[],[],'none','basic') % Title entry
+    addresults(['Vortex flow field, ('  Air.abbr '/s)'],ResultData.VortexSuper,'vortex_flow','4Dscalar','full')
     vflows = vflows + ResultData.VortexSuper;
     u = (vflows(:,:,:,2)-vflows(:,:,:,1))./2;
     v = (vflows(:,:,:,4)-vflows(:,:,:,3))./2;
@@ -159,7 +160,7 @@ if ~isempty(ResultData.VortexSuper)
         ['W (velocity, ' Air.abbr '/s) (+vortex)'],w,'w','3Dscalar','basic',...
         'Total Air Speed (+vortex)',sp,'S','3Dscalar','full',...
         'U/V/W Streamline (display only) (+vortex)',cat(4,u,v,w),[],'3Dvector','full');
-    addresults(['Node-to-node flows (+vortex), '  Air.abbr '/s)'],vflows,'flows','4Dscalar','full')
+    addresults(['Node-to-node flows (+vortex), ('  Air.abbr '/s)'],vflows,'flows','4Dscalar','full')
     addresults('Cell mass balance (+vortex), kg/s',Air.rho*sum(vflows,4),'cmb_v','3Dscalar','full')
     if ~isempty(ResultData.VortexTime)
         addresults('Vortex superposition time (seconds)',ResultData.VortexTime,'vorttime','scalar','basic')
@@ -168,6 +169,15 @@ end
 
 % Basic Room Configuration Stats
 addresults('<<Initial Room Configuration>>',[],[],'none','full') % Title entry
+room_coords = zeros([size(room_config) 3]);
+for i = 1:size(room_coords,1)
+    for j = 1:size(room_coords,2)
+        for k = 1:size(room_coords,3)
+            room_coords(i,j,k,:) = Rm.Resolution*[i-1.5 j-1.5 k-1.5];
+        end
+    end
+end
+addresults('Coordinate Matrix',room_coords,'room_coords','4Dscalar','full')
 addresults('Physical Shape (0 = wall, 1 = air)',room_config,'room_config','3Dscalar','full',...
     'Q (heat generating nodes, watts)',Q,'Q','3Dscalar','full',...
     ['u0 (boundary condition,  ' Air.abbr '/s)'],u0,'u0','3Dscalar','full',...

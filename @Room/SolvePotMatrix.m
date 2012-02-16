@@ -134,6 +134,9 @@ for ww = 2:num
         sp_s(sp_node_ind) = 1;        
         sp_f(ww) = -borderadd(i,j,k,mm);
     end
+    if mod(sp_node_ind, 10000) == 0
+        display(['Populating: ' num2str(sp_node_ind) '/' num2str(sp_numel) ' - ' num2str(sp_node_ind/sp_numel*100) '%']);
+    end
 end
 B = sp_f;
 A = sparse(sp_i,sp_j,sp_s,num,num);

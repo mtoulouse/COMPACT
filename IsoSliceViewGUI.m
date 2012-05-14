@@ -272,11 +272,11 @@ set(allpatches,'HandleVisibility','off')
         % This callback associates the checkbox for slice views with
         % enabling/disabling the corresponding slider.
         if get(gcbo,'Value') == get(gcbo,'Max')
-            set(SlideSet,'Enable','on')
+            set(SlideSet,'Enable','on');
         elseif get(gcbo,'Value') == get(gcbo,'Min')
-            set(SlideSet,'Enable','off')
+            set(SlideSet,'Enable','off');
         end
-        ChangeDisp_callback % Update the 3-D display
+        ChangeDisp_callback; % Update the 3-D display
     end
 
     function ShowFObj_callback(src,eventdata)
@@ -321,17 +321,17 @@ set(allpatches,'HandleVisibility','off')
         Rdat = Rdatum(:,:,:,dat_ind);
         MaxVal = max(max(max(Rdat)));
         MinVal = min(min(min(Rdat)));
-        set(SLIDE_T,'Max',MaxVal)
-        set(SLIDE_T,'Min',MinVal)
-        set(SLIDE_T,'Value',(MaxVal+MinVal)/2)
-        set(Text_T,'String',[Rwk ': ' num2str(MinVal) ' to ' num2str(MaxVal)])
-        ChangeDisp_callback
+        set(SLIDE_T,'Max',MaxVal);
+        set(SLIDE_T,'Min',MinVal);
+        set(SLIDE_T,'Value',(MaxVal+MinVal)/2);
+        set(Text_T,'String',[Rwk ': ' num2str(MinVal) ' to ' num2str(MaxVal)]);
+        ChangeDisp_callback;
     end
 
     function ChangeDisp_callback(src,eventdata)
         % Updates the display, depending on the desired display options
-        axes(ViewAxes)
-        cla
+        axes(ViewAxes);
+        cla;
         ShowIso = get(Iso,'Value');
         ShowSlices = get(Slic,'Value');
         ShowSliceX = get(XSlicView,'Value');
@@ -341,7 +341,7 @@ set(allpatches,'HandleVisibility','off')
         C2 = Ymin:res:Ymax;
         C3 = Zmin:res:Zmax;
         if ShowIso
-            colorbar('off')
+            colorbar('off');
             V = get(SLIDE_T,'Value');
             % set color of surface (scale colormap against range of scalar
             % values)
@@ -368,7 +368,7 @@ set(allpatches,'HandleVisibility','off')
                 sz = get(SLIDE_Z,'Value');
             end
             hold on;
-            slice(ViewAxes,C1,C2,C3,permute(Rdat,[2 1 3]),sx,sy,sz)
+            slice(ViewAxes,C1,C2,C3,permute(Rdat,[2 1 3]),sx,sy,sz);
             hold off;
         end
     end

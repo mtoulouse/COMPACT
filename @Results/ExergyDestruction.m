@@ -53,19 +53,15 @@ for i = 2:L-1
                     in_term = 0;
                     out_term = 0;
                     Q_term = 0;
-                    V = flows(i,j,k,m)/3.281; % convert from (ft/s) to (m/s)
-                    % NOTE: This is an example of an improvisation that
-                    % would have to be generalized to allow perfect
-                    % switching between feet and meters like in the Air.m
-                    % file.
-                    Z = (kT - 0.5 + 0.5*diradd(m,3))*resolution/3.281; % convert from ft to m
+                    V = flows(i,j,k,m)/Air.SI_length; % convert to m/s
+                    Z = (kT - 0.5 + 0.5*diradd(m,3))*resolution/Air.SI_length; % convert to m
                     if m_dot(i,j,k,m) >= 0 % air flows out of the cell?
                         T_out = T_field(iT,jT,kT);
 %                         H = cp*(T_out-T0);
                         TS = (T0+273.15)*(air_entropy(T_out)-air_entropy(T0)); % entropy is of air at the cell temp.
                         out_term = m_dot(i,j,k,m)*...
                             (H + include_V_term*V^2/2 + ...
-                            include_gZ_term*g/3.281*Z - TS);
+                            include_gZ_term*g/Air.SI_length*Z - TS);
 %                             (-TS);                        
                     elseif m_dot(i,j,k,m) < 0 % air flows into the cell?
                         ia = iT + diradd(m,1); % Coordinate of adjacent cell
@@ -91,7 +87,7 @@ for i = 2:L-1
                         TS = (T0+273.15)*(air_entropy(T_in)-air_entropy(T0)); % entropy is of incoming air.
                         in_term = -m_dot(i,j,k,m)*...
                             (H + include_V_term*V^2/2 + ...
-                            include_gZ_term*g/3.281*Z - TS); % units of TS, H etc. are [J/kg] aka [m^2/s^2]
+                            include_gZ_term*g/Air.SI_length*Z - TS); % units of TS, H etc. are [J/kg] aka [m^2/s^2]
 %                             (-TS);
                         % spot check!
 %                         if isequal([i j k],[17 5 7])

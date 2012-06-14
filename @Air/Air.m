@@ -15,6 +15,7 @@ classdef Air
 %         abbr = 'm';
 %         unit = 'meter';
 %         units = 'meters';
+%         SI_length = 1; % number of units per meter (used for some energy calculations)
 
         cp = 1003; %J/kg-K
         g = 32.1740; %ft/s^2
@@ -23,5 +24,6 @@ classdef Air
         abbr = 'ft';
         unit = 'foot';
         units = 'feet';
+        SI_length = 3.281; % number of units per meter (used for some energy calculations)
     end
 end
